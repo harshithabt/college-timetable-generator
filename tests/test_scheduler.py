@@ -160,3 +160,26 @@ def test_rejects_duplicate_subject_ids():
             days=["Monday"],
             slots_per_day=2,
         )
+def test_rejects_two_subjects_for_same_class_in_one_slot():
+    subjects = [
+        {
+            "subject_id": "MATH",
+            "teacher": "T1",
+            "class_id": "C1",
+            "periods_per_week": 1,
+        },
+        {
+            "subject_id": "PHY",
+            "teacher": "T2",
+            "class_id": "C1",
+            "periods_per_week": 1,
+        },
+    ]
+
+    with pytest.raises(ValueError, match="No complete timetable"):
+        generate_timetable(
+            subjects=subjects,
+            rooms=["R101", "R102"],
+            days=["Monday"],
+            slots_per_day=1,
+        )
