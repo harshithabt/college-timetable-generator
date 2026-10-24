@@ -1,4 +1,3 @@
-
 """Constraint-aware college timetable generation using backtracking."""
 
 from app.constraints import has_conflict, validate_timetable
@@ -20,11 +19,13 @@ def generate_timetable(
         class_id: Student class identifier.
         periods_per_week: Number of required weekly periods.
 
-    teacher_availability is optional. If a teacher is included, their
-    allowed slots are specified as (day, slot) pairs.
+    teacher_availability is optional. For a listed teacher, it specifies
+    allowed (day, slot) pairs. Teachers omitted from the mapping are
+    considered available at all configured times.
 
     Returns:
-        A list of timetable-entry dictionaries.
+        A list of dictionaries with day, slot, subject_id, teacher,
+        class_id, and room.
 
     Raises:
         ValueError: If inputs are invalid or no complete timetable exists.
@@ -73,8 +74,7 @@ def generate_timetable(
         for slot in range(1, slots_per_day + 1)
     }
 
-    # Validate and normalize teacher availability without modifying
-    # the dictionary supplied by the caller.
+    # Validate and normalize availability without modifying caller data.
     normalized_availability = {}
 
     for teacher, available_slots in teacher_availability.items():
@@ -96,10 +96,34 @@ def generate_timetable(
         for pair in available_slots:
             if not isinstance(pair, (tuple, list)) or len(pair) != 2:
                 raise ValueError(
-                    f"Invalid availability entry for teacher '{teacher}'."
+                    f"Invalid availability entry for teacher '{teacher}': "
+                    f"{pair!r}."
                 )
 
-            normalized_pair = tuple(pair)
+            day, slot = pair
+
+            # Validate each member before constructing or hashing a pair.
+            if not isinstance(day, str) or not day.strip():
+                raise ValueError(
+                    f"Availability contains an invalid day: {day!r}."
+                )
+
+            if day not in days:
+                raise ValueError(
+                    f"Availability contains an invalid slot: {pair!r}."
+                )
+
+            if (
+                not isinstance(slot, int)
+                or isinstance(slot, bool)
+                or slot < 1
+                or slot > slots_per_day
+            ):
+                raise ValueError(
+                    f"Availability contains an invalid slot: {pair!r}."
+                )
+
+            normalized_pair = (day, slot)
 
             if normalized_pair not in valid_slots:
                 raise ValueError(
@@ -125,7 +149,6 @@ def generate_timetable(
             raise ValueError("Every subject must be a dictionary.")
 
         missing = required_fields - subject.keys()
-
         if missing:
             raise ValueError(
                 f"Subject is missing fields: {', '.join(sorted(missing))}"
@@ -133,7 +156,6 @@ def generate_timetable(
 
         for field in ("subject_id", "teacher", "class_id"):
             value = subject[field]
-
             if not isinstance(value, str) or not value.strip():
                 raise ValueError(
                     f"Subject field '{field}' must be a non-empty string."
@@ -168,14 +190,14 @@ def generate_timetable(
                 }
             )
 
-    # Reject impossible total capacity before starting the search.
     if len(tasks) > len(valid_slots) * len(rooms):
         raise ValueError(
             "No complete timetable is possible: not enough room-slot "
             "capacity for all required periods."
         )
 
-    # Place the most constrained teachers first.
+    # Keep the existing heuristic: schedule teachers with fewer allowed
+    # slots before those with more options.
     def task_priority(task):
         teacher = task["teacher"]
         allowed_slots = normalized_availability.get(teacher, valid_slots)
