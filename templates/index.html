@@ -1,1 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fieldnote · Timetable planner</title>
+  <script>
+    try {
+      const savedTheme = localStorage.getItem('college-timetable-theme');
+      document.documentElement.dataset.theme = ['dark', 'light'].includes(savedTheme)
+        ? savedTheme : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    } catch (_) { document.documentElement.dataset.theme = 'light'; }
+  </script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main class="container app-shell">
+    <nav class="topbar" aria-label="Main navigation">
+      <a class="brand" href="{{ url_for('index') }}"><span class="brand-mark" aria-hidden="true"></span><span>Fieldnote <small>ACADEMIC PLANNING</small></span></a>
+      <div class="topbar-actions">
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark theme"><span data-theme-icon aria-hidden="true">☾</span><span data-theme-label>Dark</span></button>
+      </div>
+    </nav>
 
+    <header class="workspace-heading">
+      <p class="eyebrow">TIMETABLE WORKSPACE</p>
+      <h1>Plan your academic week.</h1>
+      <p>Configure sections, classrooms, and teaching windows, then review each class in a weekly view.</p>
+    </header>
+
+    {% if error %}<div class="alert" role="alert" tabindex="-1"><strong>There’s something to fix</strong><br>{{ error }}</div>{% endif %}
+
+    <form action="{{ url_for('generate') }}" method="post" enctype="multipart/form-data" id="timetable-form">
+      <details class="config-panel" open>
+        <summary><span class="panel-index">01</span><span><strong>Week settings</strong><small>Choose your working days and daily capacity.</small></span><span class="disclosure" aria-hidden="true"></span></summary>
+        <div class="panel-content form-grid">
+          <label>Working days <span>Enter in timetable order, separated by commas.</span>
+            <input name="days" value="{{ form_values.days }}" required autocomplete="off">
+            {% if error_target == 'days' %}<span class="field-error">{{ error }}</span>{% endif %}
+          </label>
+          <label>Slots per day
+            <input name="slots_per_day" type="number" min="1" value="{{ form_values.slots_per_day }}" required>
+            {% if error_target == 'slots_per_day' %}<span class="field-error">{{ error }}</span>{% endif %}
+          </label>
+        </div>
+      </details>
+
+      <details class="config-panel" open>
+        <summary><span class="panel-index">02</span><span><strong>Subjects and sections</strong><small>Enter each course offering once, or import the supported CSV.</small></span><span class="disclosure" aria-hidden="true"></span></summary>
+        <div class="panel-content">
+          <div class="section-heading">
+            <p class="section-intro">Keep the university course code as entered. Add a separate row for each section offering.</p>
+            <button type="button" class="button secondary" id="add-row"><span aria-hidden="true">＋</span> Add subject</button>
+          </div>
+          <fieldset class="color-settings">
+            <legend>Course colours</legend>
+            <label><input type="radio" name="color_mode" value="auto" {% if form_values.color_mode != 'manual' %}checked{% endif %}> Automatic</label>
+            <label><input type="radio" name="color_mode" value="manual" {% if form_values.color_mode == 'manual' %}checked{% endif %}> Choose colours</label>
+            <div class="palette-preview" aria-label="Course colour palette">
+              {% for color in subject_color_palette %}<span style="--swatch: {{ color }}" aria-hidden="true"></span>{% endfor %}
+            </div>
+            <p class="hint">A course uses the same colour across sections and days. CSV imports use automatic colours.</p>
+          </fieldset>
+          <div class="table-wrap" role="region" aria-label="Subject offerings" tabindex="0">
+            <table class="entry-table">
+              <thead><tr><th>Course code</th><th>Subject name</th><th>Teacher</th><th>Class / section</th><th>Periods / week</th><th>Colour</th><th><span class="visually-hidden">Remove subject</span></th></tr></thead>
+              <tbody id="subjects">
+                {% for row in subject_rows %}
+                <tr>
+                  <td><input name="course_code" placeholder="UE24CS341A" value="{{ row.course_code }}" required aria-label="Course code"></td>
+                  <td><input name="subject_name" placeholder="Database Systems" value="{{ row.subject_name }}" required aria-label="Subject name"></td>
+                  <td><input name="teacher" placeholder="Teacher ID" value="{{ row.teacher }}" required aria-label="Teacher"></td>
+                  <td><input name="class_id" placeholder="CSE-A" value="{{ row.class_id }}" required aria-label="Class section"></td>
+                  <td><input name="periods_per_week" type="number" min="1" value="{{ row.periods_per_week }}" required aria-label="Periods per week"></td>
+                  <td class="subject-color-cell"><span class="auto-color-note">Auto</span><input class="subject-color-input" name="subject_color" type="color" value="{{ row.subject_color }}" aria-label="Manual colour for this course"></td>
+                  <td><button type="button" class="remove-row" aria-label="Remove subject row" title="Remove subject">×</button></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          {% if error_target == 'subjects' %}<p class="field-error" role="status">{{ error }}{% if error_row is not none %} Check subject row {{ error_row + 1 }}.{% endif %}</p>{% endif %}
+          <div class="upload-row"><label for="subjects_csv">Import subjects from CSV</label><input id="subjects_csv" name="subjects_csv" type="file" accept=".csv,text/csv"><a href="{{ url_for('download_csv_template') }}">Download CSV template</a></div>
+          <p class="hint">CSV columns: course_code, subject_name, teacher, class_id, periods_per_week. Upload a CSV or fill in the table.</p>
+        </div>
+      </details>
+
+      <details class="config-panel" {% if error %}open{% endif %}>
+        <summary><span class="panel-index">03</span><span><strong>Classrooms</strong><small>Assign one fixed classroom to each section.</small></span><span class="disclosure" aria-hidden="true"></span></summary>
+        <div class="panel-content classroom-settings">
+          <label>Available classrooms <span>Separate room names with commas. Each room can be assigned to one section.</span>
+            <input name="rooms" value="{{ form_values.rooms }}" required autocomplete="off">
+            {% if error_target == 'rooms' %}<span class="field-error">{{ error }}</span>{% endif %}
+          </label>
+          <fieldset class="mode-switch">
+            <legend>Assignment mode</legend>
+            <label><input type="radio" name="classroom_mode" value="automatic" {% if form_values.classroom_mode != 'manual' %}checked{% endif %}> Automatic fixed assignment <span>Assigns the rooms in order to the sections listed in your subject table.</span></label>
+            <label><input type="radio" name="classroom_mode" value="manual" {% if form_values.classroom_mode == 'manual' %}checked{% endif %}> Manual fixed assignment <span>Enter one section, classroom pair per line.</span></label>
+          </fieldset>
+          <label id="manual-classroom-label" {% if form_values.classroom_mode != 'manual' %}hidden{% endif %}>Section-to-classroom assignments <span>Each section must appear once; classroom names must be in the available list.</span>
+            <textarea name="classroom_assignments" id="classroom_assignments" rows="3" placeholder="CSE-A, R101&#10;CSE-B, R102">{{ form_values.classroom_assignments }}</textarea>
+            {% if error_target == 'classroom_assignments' %}<span class="field-error">{{ error }}</span>{% endif %}
+          </label>
+          <p class="assignment-note" data-assignment-note role="status">Automatic mode assigns one distinct room per section and keeps it for every session.</p>
+        </div>
+      </details>
+
+      <details class="config-panel" {% if error or form_values.availability_enabled %}open{% endif %}>
+        <summary><span class="panel-index">04</span><span><strong>Teacher availability</strong><small>Optional restrictions for specific teaching windows.</small></span><span class="disclosure" aria-hidden="true"></span></summary>
+        <div class="panel-content">
+          <label class="check-row"><input type="checkbox" name="availability_enabled" id="availability-toggle" {% if form_values.availability_enabled %}checked{% endif %}> Use availability restrictions</label>
+          <div id="availability-fields" {% if not form_values.availability_enabled %}hidden{% endif %}>
+            <label for="teacher_availability">Allowed slots <span>One per line: teacher, day, slot. Slot numbers start at 1. Teachers not listed are available all week.</span></label>
+            <textarea id="teacher_availability" name="teacher_availability" rows="3" placeholder="T1, Monday, 1&#10;T1, Tuesday, 3">{{ form_values.teacher_availability }}</textarea>
+            {% if error_target == 'teacher_availability' %}<span class="field-error">{{ error }}</span>{% endif %}
+          </div>
+        </div>
+      </details>
+      <button class="button primary submit" type="submit" data-submit-button>Generate timetable <span aria-hidden="true">↗</span></button>
+    </form>
+  </main>
+  <script src="{{ url_for('static', filename='app.js') }}" defer></script>
+</body>
+</html>

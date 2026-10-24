@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fieldnote · Weekly timetable</title>
+  <script>
+    try {
+      const savedTheme = localStorage.getItem('college-timetable-theme');
+      document.documentElement.dataset.theme = ['dark', 'light'].includes(savedTheme)
+        ? savedTheme : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    } catch (_) { document.documentElement.dataset.theme = 'light'; }
+  </script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main class="container app-shell">
+    <nav class="topbar" aria-label="Main navigation">
+      <a class="brand" href="{{ url_for('index') }}"><span class="brand-mark" aria-hidden="true"></span><span>Fieldnote <small>ACADEMIC PLANNING</small></span></a>
+      <div class="topbar-actions"><button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark theme"><span data-theme-icon aria-hidden="true">☾</span><span data-theme-label>Dark</span></button></div>
+    </nav>
+
+    <header class="result-header">
+      <p class="eyebrow">WEEKLY TIMETABLE</p>
+      <h1>Your academic week.</h1>
+      <p>{{ timetable|length }} scheduled lesson{% if timetable|length != 1 %}s{% endif %} across {{ class_ids|length }} section{% if class_ids|length != 1 %}s{% endif %}.</p>
+    </header>
+
+    <form class="results-toolbar" action="{{ url_for('generate') }}" method="post" id="results-actions">
+      <input type="hidden" name="days" value="{{ settings.days }}">
+      <input type="hidden" name="slots_per_day" value="{{ settings.slots_per_day }}">
+      <input type="hidden" name="rooms" value="{{ settings.rooms }}">
+      <input type="hidden" name="classroom_mode" value="{{ settings.classroom_mode }}">
+      <input type="hidden" name="classroom_assignments" value="{{ settings.classroom_assignments }}">
+      <input type="hidden" name="color_mode" value="{{ settings.color_mode }}">
+      {% if settings.availability_enabled %}<input type="hidden" name="availability_enabled" value="on">{% endif %}
+      <input type="hidden" name="teacher_availability" value="{{ settings.teacher_availability }}">
+      {% for row in subject_rows %}
+      <input type="hidden" name="course_code" value="{{ row.course_code }}">
+      <input type="hidden" name="subject_name" value="{{ row.subject_name }}">
+      <input type="hidden" name="teacher" value="{{ row.teacher }}">
+      <input type="hidden" name="class_id" value="{{ row.class_id }}">
+      <input type="hidden" name="periods_per_week" value="{{ row.periods_per_week }}">
+      <input type="hidden" name="subject_color" value="{{ row.subject_color }}">
+      {% endfor %}
+      <label class="class-picker" for="class-selector">Class section
+        <select id="class-selector" aria-controls="class-timetables">
+          {% for class_id in class_ids %}<option value="{{ loop.index0 }}" data-classroom="{{ classrooms[class_id] }}">{{ class_id }}</option>{% endfor %}
+        </select>
+      </label>
+      <div class="selected-classroom" aria-live="polite"><span>Classroom</span><strong data-selected-classroom>{{ classrooms[class_ids[0]] }}</strong></div>
+      <div class="results-actions">
+        <button class="button secondary" type="submit" formaction="{{ url_for('edit_settings') }}" formmethod="post">Edit settings</button>
+        <button class="button primary" type="submit" data-submit-button>Regenerate</button>
+      </div>
+    </form>
+
+    <section class="weekly-panel" aria-labelledby="grid-heading">
+      <h2 class="weekly-heading" id="grid-heading">Weekly class schedule</h2>
+      <div id="class-timetables" aria-live="polite">
+        {% for class_id in class_ids %}
+        <div class="class-view" data-class-view="{{ loop.index0 }}" {% if not loop.first %}hidden{% endif %}>
+          <div class="table-wrap weekly-wrap" role="region" aria-label="Weekly timetable for {{ class_id }}" tabindex="0">
+            <table class="weekly-grid" style="--grid-min-width: {{ 84 + (days|length * 166) }}px">
+              <caption class="visually-hidden">{{ class_id }} weekly timetable by day and slot</caption>
+              <thead><tr><th scope="col" class="slot-heading">Slot</th>{% for day in days %}<th scope="col">{{ day }}</th>{% endfor %}</tr></thead>
+              <tbody>
+                {% for slot in slots %}
+                <tr>
+                  <th scope="row" class="slot-heading">Slot {{ slot }}</th>
+                  {% for day in days %}
+                  <td class="schedule-cell">
+                    {% set sessions = grid[class_id][day][slot] %}
+                    {% if sessions %}
+                      {% for session in sessions %}
+                      <article class="session-card" style="--subject-color: {{ session.subject_color }}">
+                        <h3>{{ session.subject_name }}</h3>
+                        <p class="course-code">{{ session.course_code }}</p>
+                        <dl><div><dt>Teacher</dt><dd>{{ session.teacher }}</dd></div></dl>
+                      </article>
+                      {% endfor %}
+                    {% else %}<span class="free-period">Free</span>{% endif %}
+                  </td>
+                  {% endfor %}
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+  </main>
+  <script src="{{ url_for('static', filename='app.js') }}" defer></script>
+</body>
+</html>
