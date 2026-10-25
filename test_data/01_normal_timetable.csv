@@ -1,0 +1,25 @@
+course_code,subject_name,teacher,class_id,periods_per_week
+CS201,Data Structures,Dr. Ramesh Kumar,CSE-A,4
+CS202,Database Systems,Dr. Anita Rao,CSE-A,4
+CS203,Operating Systems,Prof. Kiran Shetty,CSE-A,3
+MA201,Engineering Mathematics,Dr. Suresh Patil,CSE-A,3
+CS204,Computer Networks,Prof. Meera Iyer,CSE-A,3
+CS205L,Data Structures Lab,Dr. Ramesh Kumar,CSE-A,2
+CS201,Data Structures,Dr. Ramesh Kumar,CSE-B,4
+CS202,Database Systems,Dr. Anita Rao,CSE-B,4
+CS203,Operating Systems,Prof. Kiran Shetty,CSE-B,3
+MA201,Engineering Mathematics,Dr. Suresh Patil,CSE-B,3
+CS204,Computer Networks,Prof. Meera Iyer,CSE-B,3
+CS205L,Data Structures Lab,Dr. Ramesh Kumar,CSE-B,2
+CS201,Data Structures,Dr. Ramesh Kumar,CSE-C,4
+CS202,Database Systems,Dr. Anita Rao,CSE-C,4
+CS203,Operating Systems,Prof. Kiran Shetty,CSE-C,3
+MA201,Engineering Mathematics,Dr. Suresh Patil,CSE-C,3
+CS204,Computer Networks,Prof. Meera Iyer,CSE-C,3
+CS205L,Data Structures Lab,Dr. Ramesh Kumar,CSE-C,2
+EC201,Digital Electronics,Dr. Lakshmi Nair,ECE-A,4
+EC202,Signals and Systems,Prof. Arjun Menon,ECE-A,4
+EC203,Analog Circuits,Dr. Farah Khan,ECE-A,3
+MA201,Engineering Mathematics,Dr. Suresh Patil,ECE-A,3
+EC204,Communication Theory,Prof. Meera Iyer,ECE-A,3
+EC205L,Electronics Lab,Dr. Lakshmi Nair,ECE-A,2

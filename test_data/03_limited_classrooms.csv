@@ -1,0 +1,41 @@
+course_code,subject_name,teacher,class_id,periods_per_week
+CS301,Algorithms,Dr. Ramesh Kumar,CSE-A,3
+CS302,Machine Learning,Dr. Anita Rao,CSE-A,3
+CS303,Software Engineering,Prof. Kiran Shetty,CSE-A,3
+CS304,Compiler Design,Dr. Suresh Patil,CSE-A,3
+CS305,Cloud Computing,Prof. Meera Iyer,CSE-A,3
+CS301,Algorithms,Dr. Anita Rao,CSE-B,3
+CS302,Machine Learning,Prof. Kiran Shetty,CSE-B,3
+CS303,Software Engineering,Dr. Suresh Patil,CSE-B,3
+CS304,Compiler Design,Prof. Meera Iyer,CSE-B,3
+CS305,Cloud Computing,Dr. Lakshmi Nair,CSE-B,3
+CS301,Algorithms,Prof. Kiran Shetty,CSE-C,3
+CS302,Machine Learning,Dr. Suresh Patil,CSE-C,3
+CS303,Software Engineering,Prof. Meera Iyer,CSE-C,3
+CS304,Compiler Design,Dr. Lakshmi Nair,CSE-C,3
+CS305,Cloud Computing,Prof. Arjun Menon,CSE-C,3
+CS301,Algorithms,Dr. Suresh Patil,CSE-D,3
+CS302,Machine Learning,Prof. Meera Iyer,CSE-D,3
+CS303,Software Engineering,Dr. Lakshmi Nair,CSE-D,3
+CS304,Compiler Design,Prof. Arjun Menon,CSE-D,3
+CS305,Cloud Computing,Dr. Farah Khan,CSE-D,3
+CS301,Algorithms,Prof. Meera Iyer,CSE-E,3
+CS302,Machine Learning,Dr. Lakshmi Nair,CSE-E,3
+CS303,Software Engineering,Prof. Arjun Menon,CSE-E,3
+CS304,Compiler Design,Dr. Farah Khan,CSE-E,3
+CS305,Cloud Computing,Dr. Ramesh Kumar,CSE-E,3
+CS301,Algorithms,Dr. Lakshmi Nair,CSE-F,3
+CS302,Machine Learning,Prof. Arjun Menon,CSE-F,3
+CS303,Software Engineering,Dr. Farah Khan,CSE-F,3
+CS304,Compiler Design,Dr. Ramesh Kumar,CSE-F,3
+CS305,Cloud Computing,Dr. Anita Rao,CSE-F,3
+CS301,Algorithms,Prof. Arjun Menon,CSE-G,3
+CS302,Machine Learning,Dr. Farah Khan,CSE-G,3
+CS303,Software Engineering,Dr. Ramesh Kumar,CSE-G,3
+CS304,Compiler Design,Dr. Anita Rao,CSE-G,3
+CS305,Cloud Computing,Prof. Kiran Shetty,CSE-G,3
+CS301,Algorithms,Dr. Farah Khan,CSE-H,3
+CS302,Machine Learning,Dr. Ramesh Kumar,CSE-H,3
+CS303,Software Engineering,Dr. Anita Rao,CSE-H,3
+CS304,Compiler Design,Prof. Kiran Shetty,CSE-H,3
+CS305,Cloud Computing,Dr. Suresh Patil,CSE-H,3
