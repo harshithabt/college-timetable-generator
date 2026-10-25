@@ -1,0 +1,91 @@
+course_code,subject_name,teacher,class_id,periods_per_week
+CS401,Algorithms,Teacher-01,CLS-01,5
+CS402,Machine Learning,Teacher-02,CLS-01,5
+CS403,Software Engineering,Teacher-03,CLS-01,5
+CS404,Compiler Design,Teacher-04,CLS-01,5
+CS405,Cloud Computing,Teacher-05,CLS-01,5
+CS406,Data Mining,Teacher-06,CLS-01,5
+CS401,Algorithms,Teacher-02,CLS-02,5
+CS402,Machine Learning,Teacher-03,CLS-02,5
+CS403,Software Engineering,Teacher-04,CLS-02,5
+CS404,Compiler Design,Teacher-05,CLS-02,5
+CS405,Cloud Computing,Teacher-06,CLS-02,5
+CS406,Data Mining,Teacher-07,CLS-02,5
+CS401,Algorithms,Teacher-03,CLS-03,5
+CS402,Machine Learning,Teacher-04,CLS-03,5
+CS403,Software Engineering,Teacher-05,CLS-03,5
+CS404,Compiler Design,Teacher-06,CLS-03,5
+CS405,Cloud Computing,Teacher-07,CLS-03,5
+CS406,Data Mining,Teacher-08,CLS-03,5
+CS401,Algorithms,Teacher-04,CLS-04,5
+CS402,Machine Learning,Teacher-05,CLS-04,5
+CS403,Software Engineering,Teacher-06,CLS-04,5
+CS404,Compiler Design,Teacher-07,CLS-04,5
+CS405,Cloud Computing,Teacher-08,CLS-04,5
+CS406,Data Mining,Teacher-09,CLS-04,5
+CS401,Algorithms,Teacher-05,CLS-05,5
+CS402,Machine Learning,Teacher-06,CLS-05,5
+CS403,Software Engineering,Teacher-07,CLS-05,5
+CS404,Compiler Design,Teacher-08,CLS-05,5
+CS405,Cloud Computing,Teacher-09,CLS-05,5
+CS406,Data Mining,Teacher-10,CLS-05,5
+CS401,Algorithms,Teacher-06,CLS-06,5
+CS402,Machine Learning,Teacher-07,CLS-06,5
+CS403,Software Engineering,Teacher-08,CLS-06,5
+CS404,Compiler Design,Teacher-09,CLS-06,5
+CS405,Cloud Computing,Teacher-10,CLS-06,5
+CS406,Data Mining,Teacher-11,CLS-06,5
+CS401,Algorithms,Teacher-07,CLS-07,5
+CS402,Machine Learning,Teacher-08,CLS-07,5
+CS403,Software Engineering,Teacher-09,CLS-07,5
+CS404,Compiler Design,Teacher-10,CLS-07,5
+CS405,Cloud Computing,Teacher-11,CLS-07,5
+CS406,Data Mining,Teacher-12,CLS-07,5
+CS401,Algorithms,Teacher-08,CLS-08,5
+CS402,Machine Learning,Teacher-09,CLS-08,5
+CS403,Software Engineering,Teacher-10,CLS-08,5
+CS404,Compiler Design,Teacher-11,CLS-08,5
+CS405,Cloud Computing,Teacher-12,CLS-08,5
+CS406,Data Mining,Teacher-13,CLS-08,5
+CS401,Algorithms,Teacher-09,CLS-09,5
+CS402,Machine Learning,Teacher-10,CLS-09,5
+CS403,Software Engineering,Teacher-11,CLS-09,5
+CS404,Compiler Design,Teacher-12,CLS-09,5
+CS405,Cloud Computing,Teacher-13,CLS-09,5
+CS406,Data Mining,Teacher-14,CLS-09,5
+CS401,Algorithms,Teacher-10,CLS-10,5
+CS402,Machine Learning,Teacher-11,CLS-10,5
+CS403,Software Engineering,Teacher-12,CLS-10,5
+CS404,Compiler Design,Teacher-13,CLS-10,5
+CS405,Cloud Computing,Teacher-14,CLS-10,5
+CS406,Data Mining,Teacher-15,CLS-10,5
+CS401,Algorithms,Teacher-11,CLS-11,5
+CS402,Machine Learning,Teacher-12,CLS-11,5
+CS403,Software Engineering,Teacher-13,CLS-11,5
+CS404,Compiler Design,Teacher-14,CLS-11,5
+CS405,Cloud Computing,Teacher-15,CLS-11,5
+CS406,Data Mining,Teacher-01,CLS-11,5
+CS401,Algorithms,Teacher-12,CLS-12,5
+CS402,Machine Learning,Teacher-13,CLS-12,5
+CS403,Software Engineering,Teacher-14,CLS-12,5
+CS404,Compiler Design,Teacher-15,CLS-12,5
+CS405,Cloud Computing,Teacher-01,CLS-12,5
+CS406,Data Mining,Teacher-02,CLS-12,5
+CS401,Algorithms,Teacher-13,CLS-13,5
+CS402,Machine Learning,Teacher-14,CLS-13,5
+CS403,Software Engineering,Teacher-15,CLS-13,5
+CS404,Compiler Design,Teacher-01,CLS-13,5
+CS405,Cloud Computing,Teacher-02,CLS-13,5
+CS406,Data Mining,Teacher-03,CLS-13,5
+CS401,Algorithms,Teacher-14,CLS-14,5
+CS402,Machine Learning,Teacher-15,CLS-14,5
+CS403,Software Engineering,Teacher-01,CLS-14,5
+CS404,Compiler Design,Teacher-02,CLS-14,5
+CS405,Cloud Computing,Teacher-03,CLS-14,5
+CS406,Data Mining,Teacher-04,CLS-14,5
+CS401,Algorithms,Teacher-15,CLS-15,5
+CS402,Machine Learning,Teacher-01,CLS-15,5
+CS403,Software Engineering,Teacher-02,CLS-15,5
+CS404,Compiler Design,Teacher-03,CLS-15,5
+CS405,Cloud Computing,Teacher-04,CLS-15,5
+CS406,Data Mining,Teacher-05,CLS-15,5
