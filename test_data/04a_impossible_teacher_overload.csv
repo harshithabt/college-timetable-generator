@@ -1,0 +1,16 @@
+course_code,subject_name,teacher,class_id,periods_per_week
+CS203,Operating Systems,Prof. Kiran Shetty,CSE-A,8
+CS201,Data Structures,Dr. Teacher A,CSE-A,4
+MA201,Engineering Mathematics,Dr. Suresh Patil,CSE-A,3
+CS203,Operating Systems,Prof. Kiran Shetty,CSE-B,8
+CS201,Data Structures,Dr. Teacher B,CSE-B,4
+MA201,Engineering Mathematics,Dr. Math B,CSE-B,3
+CS203,Operating Systems,Prof. Kiran Shetty,CSE-C,8
+CS201,Data Structures,Dr. Teacher C,CSE-C,4
+MA201,Engineering Mathematics,Dr. Math C,CSE-C,3
+CS203,Operating Systems,Prof. Kiran Shetty,CSE-D,8
+CS201,Data Structures,Dr. Teacher D,CSE-D,4
+MA201,Engineering Mathematics,Dr. Math D,CSE-D,3
+CS203,Operating Systems,Prof. Kiran Shetty,CSE-E,8
+CS201,Data Structures,Dr. Teacher E,CSE-E,4
+MA201,Engineering Mathematics,Dr. Math E,CSE-E,3
