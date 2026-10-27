@@ -8,11 +8,10 @@ A web-based application that generates college timetables using Python, Flask, a
 
 | Name | SRN |
 |---|---|
+| Harshitha B.T. | PES1UG24AM118 |
 | Diya B.R. | PES1UG24AM097 |
 | Gaurav S. | PES1UG24AM104 |
 | Harsha K.R. | PES1UG24AM114 |
-| Harshitha B.T. | PES1UG24AM118 |
-
 ---
 
 ## Features
